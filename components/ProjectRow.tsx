@@ -219,11 +219,6 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-mono text-stone-800 shadow-lg">
                           {currentSlide + 1} / {totalSlides}
                         </div>
-                        
-                        {/* View Detail Label */}
-                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-sm font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-500 bg-stone-900/80 backdrop-blur-sm px-6 py-3 rounded-full">
-                          View Full Size
-                        </div>
                       </motion.div>
                     </AnimatePresence>
 

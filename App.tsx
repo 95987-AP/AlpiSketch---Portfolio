@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Hero } from './components/Hero';
 import { ProjectRow } from './components/ProjectRow';
 import { GlassCard } from './components/GlassCard';
+import { Navigation } from './components/Navigation';
 import { PROJECTS } from './constants';
 import { MoveRight } from 'lucide-react';
 import LogoSvg from './Logo.svg';
 
 function App() {
   const [activeProject, setActiveProject] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleProject = (id: string) => {
     setActiveProject(prev => prev === id ? null : id);
@@ -23,17 +25,23 @@ function App() {
            <span className="font-bold tracking-tight text-xl">ALPISKETCH.</span>
         </div>
         <div className="pointer-events-auto">
-          <button className="text-sm font-mono uppercase tracking-widest hover:underline decoration-1 underline-offset-4">
+          <button 
+            onClick={() => setMenuOpen(true)}
+            className="text-sm font-mono uppercase tracking-widest hover:underline decoration-1 underline-offset-4"
+          >
             Menu
           </button>
         </div>
       </nav>
 
-      <main className="relative z-10">
+      {/* Navigation Menu */}
+      <Navigation isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+
+      <main className="relative z-10" id="home">
         <Hero />
 
         {/* Selected Works Header */}
-        <section className="px-6 md:px-12 lg:px-24 pt-8 md:pt-12 pb-6 md:pb-8">
+        <section id="work" className="px-6 md:px-12 lg:px-24 pt-8 md:pt-12 pb-6 md:pb-8">
            <div className="flex items-center gap-4 mb-6 md:mb-8">
              <div className="h-[1px] w-12 bg-stone-900"></div>
              <h3 className="text-sm font-mono uppercase tracking-widest text-stone-900">Selected Works</h3>
@@ -56,7 +64,7 @@ function App() {
         </section>
 
         {/* Philosophy / About Section with Glass Card */}
-        <section className="px-6 md:px-12 lg:px-24 py-20 md:py-32 bg-stone-200 relative overflow-hidden">
+        <section id="about" className="px-6 md:px-12 lg:px-24 py-20 md:py-32 bg-stone-200 relative overflow-hidden">
            {/* Decorative Background Blob */}
            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-stone-300 rounded-full blur-[120px] opacity-60 pointer-events-none" />
 
@@ -95,7 +103,7 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#E5E4DE] text-stone-800 py-20 px-6 md:px-12 lg:px-24 border-t border-stone-300 relative z-10">
+      <footer id="contact" className="bg-[#E5E4DE] text-stone-800 py-20 px-6 md:px-12 lg:px-24 border-t border-stone-300 relative z-10">
          <div className="flex flex-col md:flex-row justify-between items-start md:items-end pb-12 mb-12 border-b border-stone-300">
             <div>
                <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-stone-800 mb-4">
