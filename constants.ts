@@ -1,0 +1,80 @@
+import { Project } from "./types";
+
+export const PROJECTS: Project[] = [
+  {
+    id: "p1",
+    number: "01",
+    title: "Minlime",
+    category: "Brand Identity",
+    year: "2024",
+    description: "A complete brand identity system showcasing cohesive visual language across digital and physical touchpoints.",
+    imageUrl: "/Minlime/firstslidebranidentiy.jpg",
+    tags: ["Branding", "Web Design", "Print"],
+    slides: [
+      "/Minlime/MinlimeWebsiteV2.png",
+      "/Minlime/mockupbiugbanner.jpg",
+      "/Minlime/MinlimePaperBag.jpg",
+      "/Minlime/MohitoPoster — kopia.jpg",
+      "/Minlime/BUSSTOPposterPresenting.jpg"
+    ]
+  },
+  {
+    id: "p2",
+    number: "02",
+    title: "Logo",
+    category: "Logo Design",
+    year: "2024",
+    description: "A curated collection of logo designs showcasing versatility across different brand identities and styles.",
+    imageUrl: "/Logos/logo-modern.png",
+    tags: ["Branding", "Identity", "Design"],
+    logoGrid: [
+      "/Logos/Alpisketchlogo.png",
+      "/Logos/Cosmorea-Logo.png",
+      "/Logos/logo-modern.png",
+      "/Logos/RytmLogoWITHBAGROUND.png",
+      "/Logos/AlpisketchElegantNOBG.png",
+      "/Logos/black-cosmica-modern.png",
+      "/Logos/CardemaLogovintage.png",
+      "/Logos/Citrushublogo.png",
+      "/Logos/FlowdaySUn.png",
+      "/Logos/logo-minlime.png",
+      "/Logos/LOGO1FLAT.png"
+    ]
+  },
+  {
+    id: "p3",
+    number: "03",
+    title: "Posters",
+    category: "Poster Design",
+    year: "2024",
+    description: "A curated collection of poster designs exploring cinematic and conceptual themes with bold typography and visual storytelling.",
+    imageUrl: "/Posters/inception.jpg",
+    tags: ["Poster", "Typography", "Visual"],
+    posterGrid: [
+      "/Posters/BrabusX-1.0.jpg",
+      "/Posters/LewyPoster.jpg",
+      "/Posters/Plakatkawiarnia2podglad.png",
+      "/Posters/ShutterISLAND_2.0.jpg",
+      "/Posters/brutalit-v2-resize.jpg",
+      "/Posters/inception.jpg",
+      "/Posters/kawafajnaResize.jpg",
+      "/Posters/projektVINCI_V2.jpg"
+    ]
+  },
+  {
+    id: "p4",
+    number: "04",
+    title: "Other Works",
+    category: "Mixed Media",
+    year: "2024",
+    description: "A diverse collection of design projects including packaging, labels, and digital artworks showcasing creative versatility.",
+    imageUrl: "/Other/bg-stream-offl.jpg",
+    tags: ["Packaging", "Label", "Digital"],
+    posterGrid: [
+      "/Other/bg-stream-offl.jpg",
+      "/Other/bloki-stream.jpg",
+      "/Other/czekolada_2_etykieta_podglad.png",
+      "/Other/czekolada_etykieta_podglad1.png"
+    ]
+  }
+];
