@@ -83,14 +83,14 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                   </div>
                   
                   {/* Larger Grid Layout for Posters */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                     {project.posterGrid.map((poster, index) => (
                       <motion.div
                         key={index}
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: index * 0.08 }}
-                        className="group relative bg-gradient-to-br from-stone-100 to-stone-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-2xl transition-all duration-500 border border-stone-300 hover:border-stone-800"
+                        className="group relative bg-gradient-to-br from-stone-100 to-stone-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-2xl transition-all duration-500 border border-stone-300 hover:border-stone-800 aspect-[3/4]"
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
@@ -140,7 +140,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                   </div>
                   
                   {/* Bento Grid Layout */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
                     {project.logoGrid.map((logo, index) => (
                       <motion.div
                         key={index}
@@ -154,7 +154,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                           setSelectedLogo(logo);
                         }}
                       >
-                        <div className="absolute inset-0 flex items-center justify-center p-6">
+                        <div className="absolute inset-0 flex items-center justify-center p-4 md:p-6">
                           <img 
                             src={logo} 
                             alt={`Logo ${index + 1}`} 
@@ -187,36 +187,46 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                   </div>
                 </div>
               ) : hasSlides ? (
-                <div className="lg:w-full relative">
-                  <div className="relative w-full flex items-center justify-center">
+                <div className="w-full relative">
+                  <div className="mb-6 md:mb-8">
+                    <h3 className="text-2xl md:text-3xl font-bold text-stone-800 mb-2">Project Gallery</h3>
+                    <p className="text-sm font-mono text-stone-500 uppercase tracking-widest">Swipe or use arrows to navigate</p>
+                  </div>
+
+                  <div className="relative w-full">
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={currentSlide}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
                         transition={{ duration: 0.5 }}
-                        className="relative w-full flex items-center justify-center"
+                        className="relative w-full rounded-lg overflow-hidden bg-gradient-to-br from-stone-100 to-stone-200 shadow-lg"
                       >
                         <img 
                           src={project.slides[currentSlide]} 
                           alt={`${project.title} - Slide ${currentSlide + 1}`} 
-                          className="w-full h-[60vh] object-contain"
+                          className="w-full h-[50vh] sm:h-[60vh] md:h-[70vh] object-contain p-4 md:p-8"
                         />
+                        
+                        {/* Slide Number Badge */}
+                        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-mono text-stone-800 shadow-lg">
+                          {currentSlide + 1} / {totalSlides}
+                        </div>
                       </motion.div>
                     </AnimatePresence>
 
                     {/* Navigation Controls */}
-                    <div className="flex items-center justify-center gap-4 mt-6">
+                    <div className="flex items-center justify-center gap-3 md:gap-4 mt-6 md:mt-8">
                       <button
                         onClick={(e) => {
                           e.preventDefault();
                           prevSlide();
                         }}
-                        className="p-3 rounded-full border border-stone-400 bg-white hover:bg-stone-800 hover:text-white hover:border-stone-800 transition-all"
+                        className="p-3 md:p-4 rounded-full border border-stone-400 bg-white hover:bg-stone-800 hover:text-white hover:border-stone-800 transition-all shadow-md"
                         aria-label="Previous slide"
                       >
-                        <ChevronLeft size={20} />
+                        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
                       </button>
                       
                       <div className="flex items-center gap-2">
@@ -229,7 +239,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                             }}
                             className={`transition-all ${
                               index === currentSlide 
-                                ? 'w-8 h-2 bg-stone-800' 
+                                ? 'w-8 md:w-10 h-2 bg-stone-800' 
                                 : 'w-2 h-2 bg-stone-400 hover:bg-stone-600'
                             } rounded-full`}
                             aria-label={`Go to slide ${index + 1}`}
@@ -242,18 +252,27 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                           e.preventDefault();
                           nextSlide();
                         }}
-                        className="p-3 rounded-full border border-stone-400 bg-white hover:bg-stone-800 hover:text-white hover:border-stone-800 transition-all"
+                        className="p-3 md:p-4 rounded-full border border-stone-400 bg-white hover:bg-stone-800 hover:text-white hover:border-stone-800 transition-all shadow-md"
                         aria-label="Next slide"
                       >
-                        <ChevronRight size={20} />
+                        <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
                       </button>
                     </div>
 
-                    {/* Slide Counter */}
-                    <div className="text-center mt-4">
-                      <span className="text-sm font-mono text-stone-500">
-                        {currentSlide + 1} / {totalSlides}
-                      </span>
+                    {/* Project Info Below Slider */}
+                    <div className="mt-8 md:mt-12 p-6 md:p-8 bg-white rounded-lg border border-stone-300 shadow-sm">
+                      <h4 className="text-sm md:text-base font-mono text-stone-500 mb-3 md:mb-4 uppercase tracking-wider">Project Brief</h4>
+                      <p className="text-base md:text-xl font-light text-stone-800 leading-relaxed mb-6 md:mb-8">
+                        {project.description}
+                      </p>
+                      
+                      <div className="flex flex-wrap gap-2 md:gap-3">
+                        {project.tags.map((tag, i) => (
+                          <span key={i} className="px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-stone-800 text-stone-800 text-xs md:text-sm uppercase font-medium hover:bg-stone-800 hover:text-white transition-colors cursor-default">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
