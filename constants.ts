@@ -58,7 +58,7 @@ export const PROJECTS: Project[] = [
       "/Posters/brutalit-v2-resize.jpg",
       "/Posters/inception.jpg",
       "/Posters/kawafajnaResize.jpg",
-      "/Posters/projektVINCI_V2.jpg"
+      "/Posters/projektVINCI_V2_resize.jpg"
     ]
   },
   {
