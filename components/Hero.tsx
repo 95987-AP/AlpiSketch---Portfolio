@@ -27,7 +27,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 overflow-hidden pt-20">
+    <section className="relative min-h-[85vh] md:min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 overflow-hidden pt-16 md:pt-20 pb-8 md:pb-12">
       
       {/* Background Abstract Shapes */}
       <motion.div 
@@ -41,7 +41,7 @@ export const Hero: React.FC = () => {
 
       {/* Content */}
       <div className="relative z-10 w-full">
-        <div className="border-b border-stone-400/60 pb-8 mb-8 flex justify-between items-end">
+        <div className="border-b border-stone-400/60 pb-6 md:pb-8 mb-6 md:mb-8 flex justify-between items-end">
           <motion.span 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -61,7 +61,7 @@ export const Hero: React.FC = () => {
         </div>
 
         <motion.h1 
-          className="text-[13vw] md:text-[12vw] leading-[0.85] font-black tracking-tighter text-stone-900 uppercase mix-blend-multiply"
+          className="text-[16vw] sm:text-[14vw] md:text-[12vw] leading-[0.9] md:leading-[0.85] font-black tracking-tighter text-stone-900 uppercase mix-blend-multiply"
           initial="hidden"
           animate="visible"
           variants={{
@@ -73,11 +73,11 @@ export const Hero: React.FC = () => {
             }
           }}
         >
-          <motion.span className="inline-block" variants={wordVariants}>From</motion.span> <br/>
-          <span className="ml-8 md:ml-[10vw] italic font-serif font-light text-stone-600 block sm:inline">
+          <motion.span className="inline-block" variants={wordVariants}>From</motion.span>{' '}
+          <span className="italic font-serif font-light text-stone-600 inline">
             <motion.span className="inline-block" variants={wordVariants}>Sketch</motion.span>{' '}
             <motion.span className="inline-block" variants={wordVariants}>To</motion.span>
-          </span> <br/>
+          </span>{' '}
           <motion.span className="inline-block" variants={wordVariants}>Reality</motion.span>
         </motion.h1>
 
@@ -85,7 +85,7 @@ export const Hero: React.FC = () => {
 
       <motion.div 
         style={{ opacity }}
-        className="absolute bottom-8 left-6 md:bottom-12 md:left-12 flex items-center gap-4 text-stone-500"
+        className="absolute bottom-6 left-6 md:bottom-12 md:left-12 flex items-center gap-4 text-stone-500"
       >
         <div className="w-[1px] h-12 bg-stone-400 animate-pulse" />
         <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest">Scroll to explore</span>

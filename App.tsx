@@ -33,15 +33,15 @@ function App() {
         <Hero />
 
         {/* Selected Works Header */}
-        <section className="px-6 md:px-12 lg:px-24 pt-16 md:pt-24 pb-8 md:pb-12">
-           <div className="flex items-center gap-4 mb-8">
+        <section className="px-6 md:px-12 lg:px-24 pt-8 md:pt-12 pb-6 md:pb-8">
+           <div className="flex items-center gap-4 mb-6 md:mb-8">
              <div className="h-[1px] w-12 bg-stone-900"></div>
              <h3 className="text-sm font-mono uppercase tracking-widest text-stone-900">Selected Works</h3>
            </div>
         </section>
 
         {/* Accordion List */}
-        <section className="pb-24 md:pb-32 min-h-[50vh]">
+        <section className="pb-16 md:pb-24 min-h-[50vh]">
           <div className="w-full">
             {PROJECTS.map((project) => (
               <ProjectRow 

@@ -14,6 +14,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedLogo, setSelectedLogo] = useState<string | null>(null);
   const [selectedPoster, setSelectedPoster] = useState<string | null>(null);
+  const [selectedSlide, setSelectedSlide] = useState<string | null>(null);
   
   const hasSlides = project.slides && project.slides.length > 0;
   const hasLogoGrid = project.logoGrid && project.logoGrid.length > 0;
@@ -190,7 +191,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                 <div className="w-full relative">
                   <div className="mb-6 md:mb-8">
                     <h3 className="text-2xl md:text-3xl font-bold text-stone-800 mb-2">Project Gallery</h3>
-                    <p className="text-sm font-mono text-stone-500 uppercase tracking-widest">Swipe or use arrows to navigate</p>
+                    <p className="text-sm font-mono text-stone-500 uppercase tracking-widest">Click image to view full size</p>
                   </div>
 
                   <div className="relative w-full">
@@ -201,17 +202,27 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
                         transition={{ duration: 0.5 }}
-                        className="relative w-full rounded-lg overflow-hidden bg-gradient-to-br from-stone-100 to-stone-200 shadow-lg"
+                        className="relative w-full rounded-lg overflow-hidden bg-gradient-to-br from-stone-100 to-stone-200 shadow-lg cursor-pointer group"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setSelectedSlide(project.slides[currentSlide]);
+                        }}
                       >
                         <img 
                           src={project.slides[currentSlide]} 
                           alt={`${project.title} - Slide ${currentSlide + 1}`} 
-                          className="w-full h-[50vh] sm:h-[60vh] md:h-[70vh] object-contain p-4 md:p-8"
+                          className="w-full h-[50vh] sm:h-[60vh] md:h-[70vh] object-contain p-4 md:p-8 transition-transform duration-500 group-hover:scale-105"
                         />
                         
                         {/* Slide Number Badge */}
                         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-mono text-stone-800 shadow-lg">
                           {currentSlide + 1} / {totalSlides}
+                        </div>
+                        
+                        {/* View Detail Label */}
+                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-sm font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-500 bg-stone-900/80 backdrop-blur-sm px-6 py-3 rounded-full">
+                          View Full Size
                         </div>
                       </motion.div>
                     </AnimatePresence>
@@ -257,22 +268,6 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                       >
                         <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
                       </button>
-                    </div>
-
-                    {/* Project Info Below Slider */}
-                    <div className="mt-8 md:mt-12 p-6 md:p-8 bg-white rounded-lg border border-stone-300 shadow-sm">
-                      <h4 className="text-sm md:text-base font-mono text-stone-500 mb-3 md:mb-4 uppercase tracking-wider">Project Brief</h4>
-                      <p className="text-base md:text-xl font-light text-stone-800 leading-relaxed mb-6 md:mb-8">
-                        {project.description}
-                      </p>
-                      
-                      <div className="flex flex-wrap gap-2 md:gap-3">
-                        {project.tags.map((tag, i) => (
-                          <span key={i} className="px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-stone-800 text-stone-800 text-xs md:text-sm uppercase font-medium hover:bg-stone-800 hover:text-white transition-colors cursor-default">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -416,6 +411,56 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                   src={selectedPoster} 
                   alt="Poster detail" 
                   className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-xl"
+                />
+              </div>
+              
+              <div className="mt-8 text-center">
+                <p className="text-sm font-mono text-stone-500 uppercase tracking-widest">
+                  Click outside or press × to close
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Slide Detail Modal */}
+      <AnimatePresence>
+        {selectedSlide && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-900/95 backdrop-blur-lg"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedSlide(null);
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="relative max-w-6xl w-full bg-white rounded-xl p-6 md:p-10 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedSlide(null);
+                }}
+                className="absolute top-4 right-4 w-12 h-12 rounded-full bg-stone-200 hover:bg-stone-900 hover:text-white transition-all flex items-center justify-center text-2xl font-light z-10 shadow-lg"
+                aria-label="Close"
+              >
+                ×
+              </button>
+              
+              <div className="flex items-center justify-center">
+                <img 
+                  src={selectedSlide} 
+                  alt="Slide detail" 
+                  className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-xl"
                 />
               </div>
               
