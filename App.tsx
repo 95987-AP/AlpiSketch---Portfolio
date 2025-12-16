@@ -132,7 +132,7 @@ function App() {
                <a href="#" className="hover:text-stone-900 transition-colors">Profile</a>
             </div>
             <div className="col-span-2 md:col-span-2 flex flex-col justify-end text-left md:text-right mt-8 md:mt-0">
-               <span>© 2024 AlpiSketch Design. All Rights Reserved.</span>
+               <span>© 2024 Aleksander Pietrzak / AlpiSketch Design. All Rights Reserved.</span>
             </div>
          </div>
       </footer>
