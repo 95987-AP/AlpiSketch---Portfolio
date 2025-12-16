@@ -83,7 +83,7 @@ function App() {
               <GlassCard className="p-8 md:p-12 lg:p-16 aspect-auto md:aspect-square lg:aspect-auto flex flex-col justify-between min-h-[300px] md:min-h-[400px]">
                  <div className="space-y-6">
                     <div className="w-12 h-12 rounded-full border border-stone-800/20 flex items-center justify-center">
-                       <span className="font-mono text-lg">A.</span>
+                       <span className="font-mono text-lg">AP</span>
                     </div>
                     <p className="text-xl md:text-2xl font-serif italic text-stone-700">
                        "Simplicity is the ultimate sophistication. It is not about lack of content, but about the abundance of clarity."
@@ -91,7 +91,7 @@ function App() {
                  </div>
                  <div className="flex justify-between items-end mt-8 md:mt-0">
                     <div className="flex flex-col">
-                       <span className="text-xs font-mono uppercase text-stone-500 mb-1">Based in</span>
+                       <span className="text-xs font-mono uppercase text-stone-500 mb-1">Aleksander Pietrzak</span>
                        <span className="font-bold text-stone-800">Warsaw, PL</span>
                     </div>
                     <MoveRight className="text-stone-800" />
