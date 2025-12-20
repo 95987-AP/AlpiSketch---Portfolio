@@ -42,14 +42,24 @@ export const Hero: React.FC = () => {
       {/* Content */}
       <div className="relative z-10 w-full">
         <div className="border-b border-stone-400/60 pb-6 md:pb-8 mb-6 md:mb-8 flex justify-between items-end">
-          <motion.span 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="font-mono text-stone-500 uppercase tracking-widest text-xs md:text-sm"
-          >
-            Portfolio [2024-2025]
-          </motion.span>
+          <div className="flex flex-col gap-2">
+            <motion.span 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="font-mono text-stone-700 uppercase tracking-widest text-sm md:text-base font-semibold"
+            >
+              Aleksander Pietrzak
+            </motion.span>
+            <motion.span 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="font-mono text-stone-500 uppercase tracking-widest text-xs md:text-sm"
+            >
+              Portfolio [2024-2025]
+            </motion.span>
+          </div>
           <motion.span 
              initial={{ opacity: 0, x: 20 }}
              animate={{ opacity: 1, x: 0 }}

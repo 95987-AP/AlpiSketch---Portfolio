@@ -68,19 +68,8 @@ function App() {
            {/* Decorative Background Blob */}
            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-stone-300 rounded-full blur-[120px] opacity-60 pointer-events-none" />
 
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 relative z-10 items-center">
-              <div>
-                 <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter mb-6 md:mb-8 text-stone-800">
-                    Design is <br/> 
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-stone-800 to-stone-500">Intelligence</span> <br/> 
-                    Made Visible.
-                 </h2>
-                 <p className="text-lg md:text-xl text-stone-600 font-light leading-relaxed max-w-md">
-                    We strip away the inessential to reveal the core truth of a brand. Minimalist aesthetics meet maximalist impact through motion and precision.
-                 </p>
-              </div>
-
-              <GlassCard className="p-8 md:p-12 lg:p-16 aspect-auto md:aspect-square lg:aspect-auto flex flex-col justify-between min-h-[300px] md:min-h-[400px]">
+           <div className="grid grid-cols-1 lg:grid-cols-1 gap-12 md:gap-16 relative z-10 items-center justify-center">
+              <GlassCard className="p-8 md:p-12 lg:p-16 aspect-auto flex flex-col justify-between min-h-[300px] md:min-h-[400px] max-w-2xl mx-auto">
                  <div className="space-y-6">
                     <div className="w-12 h-12 rounded-full border border-stone-800/20 flex items-center justify-center">
                        <span className="font-mono text-lg">AP</span>
