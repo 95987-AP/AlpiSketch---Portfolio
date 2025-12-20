@@ -63,32 +63,6 @@ function App() {
           </div>
         </section>
 
-        {/* Philosophy / About Section with Glass Card */}
-        <section id="about" className="px-6 md:px-12 lg:px-24 py-20 md:py-32 bg-stone-200 relative overflow-hidden">
-           {/* Decorative Background Blob */}
-           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-stone-300 rounded-full blur-[120px] opacity-60 pointer-events-none" />
-
-           <div className="grid grid-cols-1 lg:grid-cols-1 gap-12 md:gap-16 relative z-10 items-center justify-center">
-              <GlassCard className="p-8 md:p-12 lg:p-16 aspect-auto flex flex-col justify-between min-h-[300px] md:min-h-[400px] max-w-2xl mx-auto">
-                 <div className="space-y-6">
-                    <div className="w-12 h-12 rounded-full border border-stone-800/20 flex items-center justify-center">
-                       <span className="font-mono text-lg">AP</span>
-                    </div>
-                    <p className="text-xl md:text-2xl font-serif italic text-stone-700">
-                       "Simplicity is the ultimate sophistication. It is not about lack of content, but about the abundance of clarity."
-                    </p>
-                 </div>
-                 <div className="flex justify-between items-end mt-8 md:mt-0">
-                    <div className="flex flex-col">
-                       <span className="text-xs font-mono uppercase text-stone-500 mb-1">Aleksander Pietrzak</span>
-                       <span className="font-bold text-stone-800">Warsaw, PL</span>
-                    </div>
-                    <MoveRight className="text-stone-800" />
-                 </div>
-              </GlassCard>
-           </div>
-        </section>
-
       </main>
 
       {/* Footer */}
