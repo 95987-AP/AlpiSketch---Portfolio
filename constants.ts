@@ -64,6 +64,20 @@ export const PROJECTS: Project[] = [
   {
     id: "p4",
     number: "04",
+    title: "Website Design",
+    category: "Web Design",
+    year: "2024",
+    description: "Modern and responsive website designs showcasing clean interfaces and user-focused experiences.",
+    imageUrl: "/Website design/Component 1.jpg",
+    tags: ["Web Design", "UI/UX", "Digital"],
+    posterGrid: [
+      "/Website design/Component 1.jpg",
+      "/Website design/Group 10CHOOOROSONOS.png"
+    ]
+  },
+  {
+    id: "p5",
+    number: "05",
     title: "Other Works",
     category: "Mixed Media",
     year: "2024",
