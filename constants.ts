@@ -15,7 +15,9 @@ export const PROJECTS: Project[] = [
       "/Minlime/mockupbiugbanner.jpg",
       "/Minlime/MinlimePaperBag.jpg",
       "/Minlime/Poster_V2_upgraded.jpg",
-      "/Minlime/BUSSTOPposterPresenting.jpg"
+      "/Minlime/BUSSTOPposterPresenting.jpg",
+      "/Minlime/logo-minlime.png",
+      "/Minlime/logo-modern.png"
     ]
   },
   {
