@@ -39,6 +39,7 @@ export const PROJECTS: Project[] = [
     slides: [
       "/Minlime/MinlimeWebsiteV2.png",
       "/Minlime/BanerCanVer2.jpg",
+      "/Minlime/MohitoPoster — kopia.jpg",
       "/Minlime/Poster_V2_upgraded.jpg",
       "/Minlime/BUSSTOPposterPresenting.jpg",
       "/Minlime/logo-minlime.png",
