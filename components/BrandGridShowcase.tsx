@@ -11,7 +11,7 @@ interface BrandGridShowcaseProps {
 interface SlideItem {
   filepath: string;
   slideNumber: number;
-  layoutType: 'full' | 'half' | 'tall';
+  layoutType: 'full' | 'half' | 'tall' | 'logo';
 }
 
 // Modal state interface
@@ -59,11 +59,20 @@ const modalVariants = {
 };
 
 // Determine layout type based on filename keywords
-const getLayoutType = (filepath: string): 'full' | 'half' | 'tall' => {
+const getLayoutType = (filepath: string): 'full' | 'half' | 'tall' | 'logo' => {
   const filename = filepath.toLowerCase();
   
-  // Pattern images are tall (vertical)
-  if (filename.includes('pattern')) {
+  // Logo images - small, paired
+  if (filename.includes('logo')) {
+    return 'logo';
+  }
+  
+  // Pattern images and posters are tall (vertical) - pair them
+  if (filename.includes('pattern') || 
+      filename.includes('poster') || 
+      filename.includes('busstop') ||
+      filename.includes('paperbag') ||
+      filename.includes('bag')) {
     return 'tall';
   }
   
@@ -152,11 +161,11 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
       const item = slideItems[i];
       
       if (item.layoutType === 'full') {
-        // Full width item
+        // Full width item with max-height
         elements.push(
           <motion.div
             key={`full-${i}`}
-            className="w-full"
+            className="w-full flex justify-center"
             variants={itemVariants}
           >
             <div
@@ -166,13 +175,14 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
                 cursor-pointer
                 transition-all duration-300
                 hover:border-stone-400 hover:shadow-xl
+                max-w-4xl w-full
               "
               onClick={() => openModal(i)}
             >
               <img
                 src={item.filepath}
                 alt={`Slide ${item.slideNumber}`}
-                className="w-full h-auto object-contain"
+                className="w-full h-auto object-contain max-h-[70vh]"
                 loading="lazy"
               />
             </div>
@@ -187,7 +197,7 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
           elements.push(
             <motion.div
               key={`half-row-${i}`}
-              className="w-full grid grid-cols-2 gap-4"
+              className="w-full grid grid-cols-2 gap-4 max-w-4xl mx-auto"
               variants={itemVariants}
             >
               <div
@@ -203,7 +213,7 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
                 <img
                   src={item.filepath}
                   alt={`Slide ${item.slideNumber}`}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain max-h-[50vh]"
                   loading="lazy"
                 />
               </div>
@@ -220,7 +230,7 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
                 <img
                   src={nextItem.filepath}
                   alt={`Slide ${nextItem.slideNumber}`}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain max-h-[50vh]"
                   loading="lazy"
                 />
               </div>
@@ -228,11 +238,11 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
           );
           i += 2;
         } else {
-          // Single half item (treat as full)
+          // Single half item (treat as full but smaller)
           elements.push(
             <motion.div
               key={`half-single-${i}`}
-              className="w-full"
+              className="w-full flex justify-center"
               variants={itemVariants}
             >
               <div
@@ -242,13 +252,14 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
                   cursor-pointer
                   transition-all duration-300
                   hover:border-stone-400 hover:shadow-xl
+                  max-w-2xl w-full
                 "
                 onClick={() => openModal(i)}
               >
                 <img
                   src={item.filepath}
                   alt={`Slide ${item.slideNumber}`}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain max-h-[50vh]"
                   loading="lazy"
                 />
               </div>
@@ -264,7 +275,7 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
           elements.push(
             <motion.div
               key={`tall-row-${i}`}
-              className="w-full grid grid-cols-2 gap-4"
+              className="w-full grid grid-cols-2 gap-4 max-w-5xl mx-auto"
               variants={itemVariants}
             >
               <div
@@ -280,7 +291,7 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
                 <img
                   src={item.filepath}
                   alt={`Slide ${item.slideNumber}`}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain max-h-[70vh]"
                   loading="lazy"
                 />
               </div>
@@ -297,7 +308,7 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
                 <img
                   src={nextItem.filepath}
                   alt={`Slide ${nextItem.slideNumber}`}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain max-h-[70vh]"
                   loading="lazy"
                 />
               </div>
@@ -305,11 +316,11 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
           );
           i += 2;
         } else {
-          // Single tall item
+          // Single tall item - center it
           elements.push(
             <motion.div
               key={`tall-single-${i}`}
-              className="w-full"
+              className="w-full flex justify-center"
               variants={itemVariants}
             >
               <div
@@ -319,13 +330,14 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
                   cursor-pointer
                   transition-all duration-300
                   hover:border-stone-400 hover:shadow-xl
+                  max-w-lg w-full
                 "
                 onClick={() => openModal(i)}
               >
                 <img
                   src={item.filepath}
                   alt={`Slide ${item.slideNumber}`}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain max-h-[70vh]"
                   loading="lazy"
                 />
               </div>
@@ -333,6 +345,99 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
           );
           i++;
         }
+      } else if (item.layoutType === 'logo') {
+        // Collect all consecutive logo items
+        const logoItems: { item: SlideItem; index: number }[] = [];
+        let j = i;
+        while (j < slideItems.length && slideItems[j].layoutType === 'logo') {
+          logoItems.push({ item: slideItems[j], index: j });
+          j++;
+        }
+        
+        // Render logos in a row (2 per row)
+        for (let k = 0; k < logoItems.length; k += 2) {
+          const logo1 = logoItems[k];
+          const logo2 = logoItems[k + 1];
+          
+          if (logo2) {
+            // Two logos side by side
+            elements.push(
+              <motion.div
+                key={`logo-row-${logo1.index}`}
+                className="w-full grid grid-cols-2 gap-4 max-w-2xl mx-auto"
+                variants={itemVariants}
+              >
+                <div
+                  className="
+                    relative rounded-lg overflow-hidden
+                    bg-stone-100 border border-stone-200
+                    cursor-pointer
+                    transition-all duration-300
+                    hover:border-stone-400 hover:shadow-xl
+                    p-8
+                  "
+                  onClick={() => openModal(logo1.index)}
+                >
+                  <img
+                    src={logo1.item.filepath}
+                    alt={`Logo ${logo1.item.slideNumber}`}
+                    className="w-full h-auto object-contain max-h-[200px]"
+                    loading="lazy"
+                  />
+                </div>
+                <div
+                  className="
+                    relative rounded-lg overflow-hidden
+                    bg-stone-100 border border-stone-200
+                    cursor-pointer
+                    transition-all duration-300
+                    hover:border-stone-400 hover:shadow-xl
+                    p-8
+                  "
+                  onClick={() => openModal(logo2.index)}
+                >
+                  <img
+                    src={logo2.item.filepath}
+                    alt={`Logo ${logo2.item.slideNumber}`}
+                    className="w-full h-auto object-contain max-h-[200px]"
+                    loading="lazy"
+                  />
+                </div>
+              </motion.div>
+            );
+          } else {
+            // Single logo
+            elements.push(
+              <motion.div
+                key={`logo-single-${logo1.index}`}
+                className="w-full flex justify-center"
+                variants={itemVariants}
+              >
+                <div
+                  className="
+                    relative rounded-lg overflow-hidden
+                    bg-stone-100 border border-stone-200
+                    cursor-pointer
+                    transition-all duration-300
+                    hover:border-stone-400 hover:shadow-xl
+                    p-8
+                    max-w-sm w-full
+                  "
+                  onClick={() => openModal(logo1.index)}
+                >
+                  <img
+                    src={logo1.item.filepath}
+                    alt={`Logo ${logo1.item.slideNumber}`}
+                    className="w-full h-auto object-contain max-h-[200px]"
+                    loading="lazy"
+                  />
+                </div>
+              </motion.div>
+            );
+          }
+        }
+        
+        i = j;
       } else {
         i++;
       }
