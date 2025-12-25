@@ -38,8 +38,7 @@ export const PROJECTS: Project[] = [
     gridMode: "masonry",
     slides: [
       "/Minlime/MinlimeWebsiteV2.png",
-      "/Minlime/mockupbiugbanner.jpg",
-      "/Minlime/MinlimePaperBag.jpg",
+      "/Minlime/BanerCanVer2.jpg",
       "/Minlime/Poster_V2_upgraded.jpg",
       "/Minlime/BUSSTOPposterPresenting.jpg",
       "/Minlime/logo-minlime.png",
