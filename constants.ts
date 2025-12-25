@@ -4,6 +4,30 @@ export const PROJECTS: Project[] = [
   {
     id: "p1",
     number: "01",
+    title: "AlpineX",
+    category: "Esport Brand Identity",
+    year: "2024",
+    description: "A complete esport brand identity system for AlpineX, showcasing dynamic visual language and competitive gaming aesthetics.",
+    imageUrl: "/AlpineXEsportIdentity/AlpineXSlide1.jpg",
+    tags: ["Branding", "Esport", "Identity"],
+    slides: [
+      "/AlpineXEsportIdentity/AlpineXSlide1.jpg",
+      "/AlpineXEsportIdentity/Showcase.jpg",
+      "/AlpineXEsportIdentity/LogoShowcase.jpg",
+      "/AlpineXEsportIdentity/ColorPalette.jpg",
+      "/AlpineXEsportIdentity/Typography.jpg",
+      "/AlpineXEsportIdentity/Pattern1.jpg",
+      "/AlpineXEsportIdentity/Pattern2.jpg",
+      "/AlpineXEsportIdentity/Matchday.jpg",
+      "/AlpineXEsportIdentity/Matchday2.jpg",
+      "/AlpineXEsportIdentity/Vicotry.jpg",
+      "/AlpineXEsportIdentity/Defeat.jpg",
+      "/AlpineXEsportIdentity/BlackWhiteLogo.jpg"
+    ]
+  },
+  {
+    id: "p2",
+    number: "02",
     title: "Minlime",
     category: "Brand Identity",
     year: "2024",
@@ -21,8 +45,8 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: "p2",
-    number: "02",
+    id: "p3",
+    number: "03",
     title: "Logo",
     category: "Logo Design",
     year: "2024",
@@ -44,8 +68,8 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: "p3",
-    number: "03",
+    id: "p4",
+    number: "04",
     title: "Posters",
     category: "Poster Design",
     year: "2024",
@@ -64,8 +88,8 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: "p4",
-    number: "04",
+    id: "p5",
+    number: "05",
     title: "Website Design",
     category: "Web Design",
     year: "2024",
@@ -78,8 +102,8 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: "p5",
-    number: "05",
+    id: "p6",
+    number: "06",
     title: "Other Works",
     category: "Mixed Media",
     year: "2024",
