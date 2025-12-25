@@ -7,11 +7,11 @@ interface BrandGridShowcaseProps {
   project: Project;
 }
 
-// Flat slide item interface
+// Slide item with layout info
 interface SlideItem {
   filepath: string;
   slideNumber: number;
-  index: number;
+  layoutType: 'full' | 'half' | 'tall';
 }
 
 // Modal state interface
@@ -26,24 +26,22 @@ const containerVariants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.05,
+      staggerChildren: 0.08,
       delayChildren: 0.1,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.95 },
-  show: (index: number) => ({
+  hidden: { opacity: 0, y: 20 },
+  show: {
     opacity: 1,
     y: 0,
-    scale: 1,
     transition: {
-      duration: 0.4,
-      delay: index * 0.05,
+      duration: 0.5,
       ease: [0.16, 1, 0.3, 1],
     },
-  }),
+  },
 };
 
 const modalVariants = {
@@ -60,11 +58,32 @@ const modalVariants = {
   },
 };
 
-// Parse filenames and sort by slide number (flat list, no grouping)
-const parseAndSortSlides = (slides: string[]): SlideItem[] => {
+// Determine layout type based on filename keywords
+const getLayoutType = (filepath: string): 'full' | 'half' | 'tall' => {
+  const filename = filepath.toLowerCase();
+  
+  // Pattern images are tall (vertical)
+  if (filename.includes('pattern')) {
+    return 'tall';
+  }
+  
+  // Matchday, Victory, Defeat are half-width (2 per row)
+  if (filename.includes('matchday') || 
+      filename.includes('victory') || 
+      filename.includes('vicotry') || 
+      filename.includes('defeat')) {
+    return 'half';
+  }
+  
+  // Everything else is full width
+  return 'full';
+};
+
+// Parse and organize slides
+const parseSlides = (slides: string[]): SlideItem[] => {
   let fallbackNumber = 900;
 
-  const items: SlideItem[] = slides.map((filepath, originalIndex) => {
+  return slides.map((filepath) => {
     const filename = filepath.split('/').pop() || '';
     const match = filename.match(/Slide(\d+)/i);
     const slideNum = match ? parseInt(match[1], 10) : fallbackNumber++;
@@ -72,29 +91,9 @@ const parseAndSortSlides = (slides: string[]): SlideItem[] => {
     return {
       filepath,
       slideNumber: slideNum,
-      index: originalIndex,
+      layoutType: getLayoutType(filepath),
     };
   });
-
-  // Sort by slide number to keep same-numbered slides adjacent
-  return items.sort((a, b) => a.slideNumber - b.slideNumber);
-};
-
-// Determine grid span classes based on position
-const getGridClasses = (index: number): string => {
-  // Pattern for visual interest - mostly 1x1, some wider/taller
-  const patterns = [
-    'col-span-1 row-span-1',                    // 0: normal
-    'col-span-1 row-span-1',                    // 1: normal
-    'col-span-1 md:col-span-2 row-span-1',      // 2: wider
-    'col-span-1 row-span-1',                    // 3: normal
-    'col-span-1 row-span-1 md:row-span-2',      // 4: taller
-    'col-span-1 row-span-1',                    // 5: normal
-    'col-span-1 row-span-1',                    // 6: normal
-    'col-span-1 md:col-span-2 row-span-1',      // 7: wider
-  ];
-  
-  return patterns[index % patterns.length];
 };
 
 export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
@@ -103,9 +102,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
     imageIndex: 0,
   });
 
-  // Parse and sort slides (flat list)
+  // Parse slides
   const slideItems = useMemo(() => {
-    return parseAndSortSlides(project.slides || []);
+    return parseSlides(project.slides || []);
   }, [project.slides]);
 
   // Open modal
@@ -144,41 +143,214 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
   // Current modal image
   const currentImage = slideItems[modal.imageIndex]?.filepath;
 
+  // Group slides into rows for rendering
+  const renderSlides = () => {
+    const elements: React.ReactNode[] = [];
+    let i = 0;
+
+    while (i < slideItems.length) {
+      const item = slideItems[i];
+      
+      if (item.layoutType === 'full') {
+        // Full width item
+        elements.push(
+          <motion.div
+            key={`full-${i}`}
+            className="w-full"
+            variants={itemVariants}
+          >
+            <div
+              className="
+                relative rounded-lg overflow-hidden
+                bg-stone-100 border border-stone-200
+                cursor-pointer
+                transition-all duration-300
+                hover:border-stone-400 hover:shadow-xl
+              "
+              onClick={() => openModal(i)}
+            >
+              <img
+                src={item.filepath}
+                alt={`Slide ${item.slideNumber}`}
+                className="w-full h-auto object-contain"
+                loading="lazy"
+              />
+            </div>
+          </motion.div>
+        );
+        i++;
+      } else if (item.layoutType === 'half') {
+        // Check if next item is also half
+        const nextItem = slideItems[i + 1];
+        if (nextItem && nextItem.layoutType === 'half') {
+          // Two half items side by side
+          elements.push(
+            <motion.div
+              key={`half-row-${i}`}
+              className="w-full grid grid-cols-2 gap-4"
+              variants={itemVariants}
+            >
+              <div
+                className="
+                  relative rounded-lg overflow-hidden
+                  bg-stone-100 border border-stone-200
+                  cursor-pointer
+                  transition-all duration-300
+                  hover:border-stone-400 hover:shadow-xl
+                "
+                onClick={() => openModal(i)}
+              >
+                <img
+                  src={item.filepath}
+                  alt={`Slide ${item.slideNumber}`}
+                  className="w-full h-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+              <div
+                className="
+                  relative rounded-lg overflow-hidden
+                  bg-stone-100 border border-stone-200
+                  cursor-pointer
+                  transition-all duration-300
+                  hover:border-stone-400 hover:shadow-xl
+                "
+                onClick={() => openModal(i + 1)}
+              >
+                <img
+                  src={nextItem.filepath}
+                  alt={`Slide ${nextItem.slideNumber}`}
+                  className="w-full h-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </motion.div>
+          );
+          i += 2;
+        } else {
+          // Single half item (treat as full)
+          elements.push(
+            <motion.div
+              key={`half-single-${i}`}
+              className="w-full"
+              variants={itemVariants}
+            >
+              <div
+                className="
+                  relative rounded-lg overflow-hidden
+                  bg-stone-100 border border-stone-200
+                  cursor-pointer
+                  transition-all duration-300
+                  hover:border-stone-400 hover:shadow-xl
+                "
+                onClick={() => openModal(i)}
+              >
+                <img
+                  src={item.filepath}
+                  alt={`Slide ${item.slideNumber}`}
+                  className="w-full h-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </motion.div>
+          );
+          i++;
+        }
+      } else if (item.layoutType === 'tall') {
+        // Check if next item is also tall
+        const nextItem = slideItems[i + 1];
+        if (nextItem && nextItem.layoutType === 'tall') {
+          // Two tall items side by side
+          elements.push(
+            <motion.div
+              key={`tall-row-${i}`}
+              className="w-full grid grid-cols-2 gap-4"
+              variants={itemVariants}
+            >
+              <div
+                className="
+                  relative rounded-lg overflow-hidden
+                  bg-stone-100 border border-stone-200
+                  cursor-pointer
+                  transition-all duration-300
+                  hover:border-stone-400 hover:shadow-xl
+                "
+                onClick={() => openModal(i)}
+              >
+                <img
+                  src={item.filepath}
+                  alt={`Slide ${item.slideNumber}`}
+                  className="w-full h-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+              <div
+                className="
+                  relative rounded-lg overflow-hidden
+                  bg-stone-100 border border-stone-200
+                  cursor-pointer
+                  transition-all duration-300
+                  hover:border-stone-400 hover:shadow-xl
+                "
+                onClick={() => openModal(i + 1)}
+              >
+                <img
+                  src={nextItem.filepath}
+                  alt={`Slide ${nextItem.slideNumber}`}
+                  className="w-full h-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </motion.div>
+          );
+          i += 2;
+        } else {
+          // Single tall item
+          elements.push(
+            <motion.div
+              key={`tall-single-${i}`}
+              className="w-full"
+              variants={itemVariants}
+            >
+              <div
+                className="
+                  relative rounded-lg overflow-hidden
+                  bg-stone-100 border border-stone-200
+                  cursor-pointer
+                  transition-all duration-300
+                  hover:border-stone-400 hover:shadow-xl
+                "
+                onClick={() => openModal(i)}
+              >
+                <img
+                  src={item.filepath}
+                  alt={`Slide ${item.slideNumber}`}
+                  className="w-full h-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </motion.div>
+          );
+          i++;
+        }
+      } else {
+        i++;
+      }
+    }
+
+    return elements;
+  };
+
   return (
     <div className="w-full">
-      {/* Unified Masonry Grid */}
+      {/* Vertical Stack Layout */}
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-4 auto-rows-[280px] md:auto-rows-[320px]"
+        className="flex flex-col gap-4"
         variants={containerVariants}
         initial="hidden"
         animate="show"
       >
-        {slideItems.map((item, index) => (
-          <motion.div
-            key={`slide-${item.slideNumber}-${index}`}
-            className={`
-              ${getGridClasses(index)}
-              relative rounded-lg overflow-hidden
-              bg-stone-100 border border-stone-200
-              cursor-pointer
-              transition-all duration-300
-              hover:border-stone-400 hover:shadow-xl hover:scale-[1.02]
-            `}
-            variants={itemVariants}
-            custom={index}
-            onClick={() => openModal(index)}
-          >
-            <img
-              src={item.filepath}
-              alt={`Slide ${item.slideNumber}`}
-              className="
-                w-full h-full object-contain p-3
-                transition-all duration-300
-              "
-              loading="lazy"
-            />
-          </motion.div>
-        ))}
+        {renderSlides()}
       </motion.div>
 
       {/* Modal */}
