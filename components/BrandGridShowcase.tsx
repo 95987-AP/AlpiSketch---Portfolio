@@ -62,17 +62,25 @@ const modalVariants = {
 const getLayoutType = (filepath: string): 'full' | 'half' | 'tall' | 'logo' => {
   const filename = filepath.toLowerCase();
   
+  // LogoShowcase and similar large logo displays - full width
+  if (filename.includes('logoshowcase')) {
+    return 'full';
+  }
+  
   // Logo images - small, paired
   if (filename.includes('logo')) {
     return 'logo';
   }
   
+  // PaperBag - centered full width
+  if (filename.includes('paperbag') || filename.includes('bag')) {
+    return 'full';
+  }
+  
   // Pattern images and posters are tall (vertical) - pair them
   if (filename.includes('pattern') || 
       filename.includes('poster') || 
-      filename.includes('busstop') ||
-      filename.includes('paperbag') ||
-      filename.includes('bag')) {
+      filename.includes('busstop')) {
     return 'tall';
   }
   
@@ -171,10 +179,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
             <div
               className="
                 relative rounded-lg overflow-hidden
-                bg-stone-100 border border-stone-200
                 cursor-pointer
                 transition-all duration-300
-                hover:border-stone-400 hover:shadow-xl
+                hover:shadow-2xl
                 max-w-4xl w-full
               "
               onClick={() => openModal(i)}
@@ -203,10 +210,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
               <div
                 className="
                   relative rounded-lg overflow-hidden
-                  bg-stone-100 border border-stone-200
                   cursor-pointer
                   transition-all duration-300
-                  hover:border-stone-400 hover:shadow-xl
+                  hover:shadow-2xl
                 "
                 onClick={() => openModal(i)}
               >
@@ -220,10 +226,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
               <div
                 className="
                   relative rounded-lg overflow-hidden
-                  bg-stone-100 border border-stone-200
                   cursor-pointer
                   transition-all duration-300
-                  hover:border-stone-400 hover:shadow-xl
+                  hover:shadow-2xl
                 "
                 onClick={() => openModal(i + 1)}
               >
@@ -248,10 +253,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
               <div
                 className="
                   relative rounded-lg overflow-hidden
-                  bg-stone-100 border border-stone-200
                   cursor-pointer
                   transition-all duration-300
-                  hover:border-stone-400 hover:shadow-xl
+                  hover:shadow-2xl
                   max-w-2xl w-full
                 "
                 onClick={() => openModal(i)}
@@ -281,10 +285,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
               <div
                 className="
                   relative rounded-lg overflow-hidden
-                  bg-stone-100 border border-stone-200
                   cursor-pointer
                   transition-all duration-300
-                  hover:border-stone-400 hover:shadow-xl
+                  hover:shadow-2xl
                 "
                 onClick={() => openModal(i)}
               >
@@ -298,10 +301,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
               <div
                 className="
                   relative rounded-lg overflow-hidden
-                  bg-stone-100 border border-stone-200
                   cursor-pointer
                   transition-all duration-300
-                  hover:border-stone-400 hover:shadow-xl
+                  hover:shadow-2xl
                 "
                 onClick={() => openModal(i + 1)}
               >
@@ -326,10 +328,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
               <div
                 className="
                   relative rounded-lg overflow-hidden
-                  bg-stone-100 border border-stone-200
                   cursor-pointer
                   transition-all duration-300
-                  hover:border-stone-400 hover:shadow-xl
+                  hover:shadow-2xl
                   max-w-lg w-full
                 "
                 onClick={() => openModal(i)}
@@ -370,10 +371,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
                 <div
                   className="
                     relative rounded-lg overflow-hidden
-                    bg-stone-100 border border-stone-200
                     cursor-pointer
                     transition-all duration-300
-                    hover:border-stone-400 hover:shadow-xl
+                    hover:shadow-2xl
                     p-8
                   "
                   onClick={() => openModal(logo1.index)}
@@ -388,10 +388,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
                 <div
                   className="
                     relative rounded-lg overflow-hidden
-                    bg-stone-100 border border-stone-200
                     cursor-pointer
                     transition-all duration-300
-                    hover:border-stone-400 hover:shadow-xl
+                    hover:shadow-2xl
                     p-8
                   "
                   onClick={() => openModal(logo2.index)}
@@ -416,10 +415,9 @@ export default function BrandGridShowcase({ project }: BrandGridShowcaseProps) {
                 <div
                   className="
                     relative rounded-lg overflow-hidden
-                    bg-stone-100 border border-stone-200
                     cursor-pointer
                     transition-all duration-300
-                    hover:border-stone-400 hover:shadow-xl
+                    hover:shadow-2xl
                     p-8
                     max-w-sm w-full
                   "
