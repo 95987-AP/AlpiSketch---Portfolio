@@ -13,17 +13,17 @@ export const PROJECTS: Project[] = [
     gridMode: "masonry",
     slides: [
       "/AlpineXEsportIdentity/AlpineXSlide1.jpg",
-      "/AlpineXEsportIdentity/Showcase.jpg",
-      "/AlpineXEsportIdentity/LogoShowcase.jpg",
-      "/AlpineXEsportIdentity/ColorPalette.jpg",
-      "/AlpineXEsportIdentity/Typography.jpg",
-      "/AlpineXEsportIdentity/Pattern1.jpg",
-      "/AlpineXEsportIdentity/Pattern2.jpg",
-      "/AlpineXEsportIdentity/Matchday.jpg",
-      "/AlpineXEsportIdentity/Matchday2.jpg",
-      "/AlpineXEsportIdentity/Vicotry.jpg",
-      "/AlpineXEsportIdentity/Defeat.jpg",
-      "/AlpineXEsportIdentity/BlackWhiteLogo.jpg"
+      "/AlpineXEsportIdentity/ShowcaseSlide2.jpg",
+      "/AlpineXEsportIdentity/LogoShowcaseSlide3.jpg",
+      "/AlpineXEsportIdentity/TypographySlide4.jpg",
+      "/AlpineXEsportIdentity/ColorPaletteSlide5.jpg",
+      "/AlpineXEsportIdentity/MatchdaySlide6.jpg",
+      "/AlpineXEsportIdentity/Matchday2Slide6.jpg",
+      "/AlpineXEsportIdentity/PatternSlide7.jpg",
+      "/AlpineXEsportIdentity/Pattern2Slide7.jpg",
+      "/AlpineXEsportIdentity/VicotrySlide8.jpg",
+      "/AlpineXEsportIdentity/DefeatSlide8.jpg",
+      "/AlpineXEsportIdentity/BlackWhiteLogoSlide9.jpg"
     ]
   },
   {

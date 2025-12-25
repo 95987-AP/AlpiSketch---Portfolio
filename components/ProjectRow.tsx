@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
 import { Project } from '../types';
 import { ArrowDownRight, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { BrandGridShowcase } from './BrandGridShowcase';
+import BrandGridShowcase from './BrandGridShowcase';
 
 interface ProjectRowProps {
   project: Project;
