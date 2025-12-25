@@ -12,6 +12,7 @@ export interface Project {
   slides?: string[];
   logoGrid?: string[];
   posterGrid?: string[];
+  gridMode?: "masonry" | "slides"; // "masonry" → BrandGridShowcase, "slides" → old slideshow
 }
 
 export interface AnimationProps {

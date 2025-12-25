@@ -10,6 +10,7 @@ export const PROJECTS: Project[] = [
     description: "A complete esport brand identity system for AlpineX, showcasing dynamic visual language and competitive gaming aesthetics.",
     imageUrl: "/AlpineXEsportIdentity/AlpineXSlide1.jpg",
     tags: ["Branding", "Esport", "Identity"],
+    gridMode: "masonry",
     slides: [
       "/AlpineXEsportIdentity/AlpineXSlide1.jpg",
       "/AlpineXEsportIdentity/Showcase.jpg",
@@ -34,6 +35,7 @@ export const PROJECTS: Project[] = [
     description: "A complete brand identity system showcasing cohesive visual language across digital and physical touchpoints.",
     imageUrl: "/Minlime/firstslidebranidentiy.jpg",
     tags: ["Branding", "Web Design", "Print"],
+    gridMode: "masonry",
     slides: [
       "/Minlime/MinlimeWebsiteV2.png",
       "/Minlime/mockupbiugbanner.jpg",

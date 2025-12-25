@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
 import { Project } from '../types';
 import { ArrowDownRight, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BrandGridShowcase } from './BrandGridShowcase';
 
 interface ProjectRowProps {
   project: Project;
@@ -17,6 +18,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
   const [selectedSlide, setSelectedSlide] = useState<string | null>(null);
   
   const hasSlides = project.slides && project.slides.length > 0;
+  const hasBrandGrid = hasSlides && project.gridMode === 'masonry';
   const hasLogoGrid = project.logoGrid && project.logoGrid.length > 0;
   const hasPosterGrid = project.posterGrid && project.posterGrid.length > 0;
   const totalSlides = hasSlides ? project.slides.length : 0;
@@ -187,6 +189,9 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick
                     </div>
                   </div>
                 </div>
+              ) : hasBrandGrid ? (
+                /* Brand Grid Showcase - Masonry layout for brand identity projects */
+                <BrandGridShowcase project={project} />
               ) : hasSlides ? (
                 <div className="w-full relative">
                   <div className="mb-6 md:mb-8">

@@ -1,0 +1,444 @@
+📋 KOMPLETNY OPIS STRONY PORTFOLIO - KONTEKST DLA AGENTA AI
+
+========================================================================================================
+🎯 OGÓLNY PRZEGLĄD PROJEKTU
+========================================================================================================
+
+Nazwa projektu: Architectural Minimalist Portfolio  
+Właściciel: Aleksander Pietrzak / AlpiSketch Design  
+Typ: Jednostronicowe portfolio designerskie (SPA)  
+Stos technologiczny: React 19.2.1 + TypeScript + Vite 6.2.0 + Framer Motion 12.23.25 + Tailwind CSS  
+Hosting: GitHub Pages  
+URL: Deploy przez `npm run deploy` (gh-pages)
+
+========================================================================================================
+🎨 ESTETYKA I DESIGN SYSTEM
+========================================================================================================
+
+FILOZOFIA DESIGNU:
+- Styl: Minimalistyczny, architektoniczny, high-end portfolio
+- Typografia: Mix bold sans-serif (główne nagłówki) + font-mono (akcenty) + serif italic (podkreślenia)
+- Kolorystyka: 
+  - Tło: #EBEAE5 (ciepły beż)
+  - Tekst główny: stone-900 (prawie czarny)
+  - Akcenty: stone-500, stone-600, stone-800
+  - Selekcja: czarne tło, biały tekst
+  
+KLUCZOWE ELEMENTY WIZUALNE:
+- Glassmorphism: Efekty szkła z backdrop-blur, półprzezroczyste tła
+- Grayscale-to-color hover: Obrazy wyjściowo w skali szarości, kolor po najechaniu
+- Mix-blend-difference: Nawigacja z efektem odwrócenia kolorów
+- Animacje: Płynne, ease curves [0.16, 1, 0.3, 1], czas trwania 0.5-0.8s
+- Parallax: Tła hero section z różnymi prędkościami scrollu
+
+========================================================================================================
+📐 STRUKTURA STRONY
+========================================================================================================
+
+1. NAWIGACJA (Fixed Top)
+-------------------------
+- Zawsze widoczna na górze ekranu
+- Lewy górny róg: Logo SVG + "ALPISKETCH."
+- Prawy górny róg: Przycisk "MENU"
+- Efekt mix-blend-difference - biały tekst odwracający kolory tła
+- pointer-events-none z selektywnymi pointer-events-auto
+
+2. NAVIGATION MENU (Slide-in Panel)
+------------------------------------
+Komponent: Navigation.tsx
+- Pełnoekranowy overlay z bg-stone-900/80 backdrop-blur-md
+- Panel z prawej strony (100% mobile, 384px desktop)
+- Animacja wejścia: slide od prawej z easing
+- Sekcje menu:
+  - [01] Home → #home
+  - [02] Work → #work
+  - [03] About → #about
+  - [04] Contact → #contact
+- Footer: Email sketchalpi@gmail.com + linki social media
+- Smooth scroll behavior do sekcji
+
+3. HERO SECTION
+---------------
+Komponent: Hero.tsx
+- Wysokość: min-h-[85vh] md:min-h-screen
+- Parallax background:
+  - 2 duże okrągłe błędne kształty (gradient blur)
+  - Rotacja i przesunięcie Y przy scrollu
+  - Opacity fade-out głównego contentu
+  
+- Zawartość:
+  - Top banner: "Aleksander Pietrzak" + "Portfolio [2024-2025]"
+  - Motto: "Digital Architecture & Visual Interaction"
+  - Główny nagłówek (animated):
+    FROM sketch TO REALITY
+    - Każde słowo animowane osobno (stagger children)
+    - "sketch" i "TO" italic serif lighter
+    - Rozmiar: text-[16vw] sm:[14vw] md:[12vw]
+  
+- Scroll indicator: Animowana linia + "Scroll to Explore"
+
+4. SELECTED WORKS HEADER
+------------------------
+- Separator: Linia + "SELECTED WORKS" (font-mono, uppercase)
+- Padding: px-6 md:px-12 lg:px-24
+
+5. PROJECTS SECTION (Accordion List)
+------------------------------------
+Komponent: ProjectRow.tsx  
+Mechanizm: Rozwijane akordeon - jeden projekt na raz
+
+STRUKTURA POJEDYNCZEGO PROJECTROW:
+
+A. Zamknięty stan (Header):
+- Numer projektu: [01], [02], etc.
+- Tytuł projektu: duży, bold, text-3xl md:text-6xl
+- Kategoria: uppercase, tracking-widest (widoczna desktop)
+- Ikona: ArrowDownRight w okręgu
+- Hover efekty:
+  - Title przesunięcie w prawo (translate-x-4)
+  - Tło scale-y animation
+  - Ikona zmienia kolor
+
+B. Otwarty stan (Expandable Content):
+
+Projekt ma 3 możliwe tryby wyświetlania:
+
+TRYB 1: SLIDES (np. AlpineX, Minlime)
+--------------------------------------
+slides: string[] // Array ścieżek do obrazów
+
+- Slideshow z nawigacją
+- Obraz: h-[50vh] sm:[60vh] md:[70vh], object-contain
+- Przyciski: Previous/Next (ChevronLeft/Right)
+- Dots navigation: aktywny slide = szerszy bar
+- Badge: "X / Y" licznik slajdów
+- Click na image: Modal full-size view
+- Tło: gradient from-stone-100 to-stone-200
+
+TRYB 2: LOGO GRID (projekt "Logo")
+-----------------------------------
+logoGrid: string[] // Array logo
+
+- Bento grid: grid-cols-2 sm:grid-cols-3 lg:grid-cols-4
+- Każde logo: aspect-square, centered, object-contain
+- Hover: scale 110%, border highlight, index badge
+- Click: Modal z powiększeniem
+- Stats na dole: "X Total Designs | Year"
+
+TRYB 3: POSTER GRID (projekty Posters, Website Design, Other Works)
+--------------------------------------------------------------------
+posterGrid: string[] // Array posterów/obrazów
+
+- Większy grid: grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
+- aspect-[3/4] ratio
+- Hover: gradient overlay, scale 105%, "View Detail" label
+- Click: Modal full-size
+- Stats: "X Total Posters | Year"
+
+TRYB 4: SINGLE IMAGE (fallback)
+--------------------------------
+Gdy brak slides/logoGrid/posterGrid:
+- Jeden obraz + opis tekstowy obok (2-column layout)
+- Grayscale → color on hover
+- Glass badge na obrazie
+- Projekt Brief + Tagi
+- CTA: "View Case Study" button
+
+MODALS (3 typy):
+1. Logo Detail: Białe tło, centered logo, max-h-[60vh]
+2. Poster Detail: Białe tło, rounded-xl, max-h-[80vh]
+3. Slide Detail: Białe tło, max-h-[85vh]
+
+Wszystkie z:
+- Zamknięcie: Click outside lub przycisk "×"
+- Animacje: fade + scale
+- z-[100]
+
+6. FOOTER SECTION
+-----------------
+ID: #contact
+- Tło: #E5E4DE (jaśniejszy beż)
+- Call to Action:
+  - "Let's Talk." (duży bold)
+  - "Have a project in mind? We are currently accepting new commissions."
+  - Email: sketchalpi@gmail.com (wielki, font-mono, underline)
+  
+- Grid 4-kolumnowy:
+  - Socials: Instagram, Twitter/X, LinkedIn (placeholder links)
+  - Sitemap: Home, Work, Profile
+  - Copyright: "© 2024 Aleksander Pietrzak / AlpiSketch Design"
+
+========================================================================================================
+📊 CONTENT - PROJEKTY (constants.ts)
+========================================================================================================
+
+PROJEKT 01: AlpineX
+--------------------
+- Kategoria: Esport Brand Identity
+- Rok: 2024
+- Opis: "A complete esport brand identity system for AlpineX, showcasing dynamic visual language and competitive gaming aesthetics."
+- Tagi: Branding, Esport, Identity
+- Typ: SLIDES (12 slajdów)
+- Slajdy:
+  1. AlpineXSlide1.jpg (główny)
+  2. Showcase.jpg
+  3. LogoShowcase.jpg
+  4. ColorPalette.jpg
+  5. Typography.jpg
+  6. Pattern1.jpg
+  7. Pattern2.jpg
+  8. Matchday.jpg
+  9. Matchday2.jpg
+  10. Vicotry.jpg (typo w nazwie pliku)
+  11. Defeat.jpg
+  12. BlackWhiteLogo.jpg
+
+PROJEKT 02: Minlime
+--------------------
+- Kategoria: Brand Identity
+- Rok: 2024
+- Tagi: Branding, Web Design, Print
+- Typ: SLIDES (7 slajdów)
+- Website, mockupy, torba papierowa, postery, loga
+
+PROJEKT 03: Logo
+----------------
+- Kategoria: Logo Design
+- Rok: 2024
+- Tagi: Branding, Identity, Design
+- Typ: LOGO GRID (11 logo)
+- Różnorodne style: Alpisketch, Cosmorea, Cardema, Citrushub, etc.
+
+PROJEKT 04: Posters
+-------------------
+- Kategoria: Poster Design
+- Rok: 2024
+- Tagi: Poster, Typography, Visual
+- Typ: POSTER GRID (8 posterów)
+- Tematyka: Inception, Shutter Island, brutalizm, kawy, Brabus
+
+PROJEKT 05: Website Design
+--------------------------
+- Kategoria: Web Design
+- Rok: 2024
+- Tagi: Web Design, UI/UX, Digital
+- Typ: POSTER GRID (2 obrazy)
+- Komponenty UI/mockupy stron
+
+PROJEKT 06: Other Works
+-----------------------
+- Kategoria: Mixed Media
+- Rok: 2024
+- Tagi: Packaging, Label, Digital
+- Typ: POSTER GRID (4 obrazy)
+- Stream overlays, etykiety czekolad, packaging
+
+========================================================================================================
+⚙️ FUNKCJONALNOŚĆ I INTERAKCJE
+========================================================================================================
+
+STATE MANAGEMENT (App.tsx):
+---------------------------
+const [activeProject, setActiveProject] = useState<string | null>(null);
+const [menuOpen, setMenuOpen] = useState(false);
+
+- activeProject: ID aktualnie otwartego projektu (tylko jeden na raz)
+- menuOpen: Stan menu nawigacyjnego
+
+ANIMACJE (Framer Motion):
+--------------------------
+1. Hero:
+   - Parallax scroll transforms (y, rotate)
+   - Stagger children dla słów
+   - Fade-out opacity przy scrollu
+
+2. ProjectRow:
+   - Height animation: 0 → auto
+   - Opacity fade
+   - Stagger delays dla grid items
+
+3. Navigation:
+   - Slide-in z prawej
+   - Backdrop fade
+   - Menu items stagger (0.1s delays)
+
+4. Modals:
+   - Scale 0.9 → 1.0
+   - Opacity fade
+   - Y transform
+
+RESPONSIVE BREAKPOINTS:
+-----------------------
+- Mobile: < 640px
+- Tablet: md: >= 768px
+- Desktop: lg: >= 1024px
+
+SCROLL BEHAVIOR:
+----------------
+- useScroll() z framer-motion
+- useTransform() dla parallax
+- scrollIntoView({ behavior: 'smooth' }) dla nawigacji
+
+========================================================================================================
+🗂️ STRUKTURA PLIKÓW
+========================================================================================================
+
+architectural-minimalist-portfolio/
+├── App.tsx                    # Main app, layout, state
+├── index.tsx                  # Entry point, React root
+├── constants.ts               # PROJECTS array
+├── types.ts                   # TypeScript interfaces
+├── components/
+│   ├── Hero.tsx              # Hero section z parallax
+│   ├── ProjectRow.tsx        # Accordion row + modals
+│   ├── Navigation.tsx        # Slide-in menu
+│   └── GlassCard.tsx         # Glassmorphism wrapper (unused currently)
+├── public/
+│   ├── Logo.svg              # AlpiSketch logo
+│   ├── AlpineXEsportIdentity/  # 12 slajdów
+│   ├── Minlime/              # 7 slajdów + loga
+│   ├── Logos/                # 11 różnych logo
+│   ├── Posters/              # 8 posterów
+│   ├── Website design/       # 2 mockupy
+│   └── Other/                # 4 mixed media
+├── package.json              # Dependencies, scripts
+├── vite.config.ts            # Vite config
+├── tsconfig.json             # TypeScript config
+└── CNAME                     # GitHub Pages domain
+
+========================================================================================================
+🚀 DEPLOYMENT & WORKFLOW
+========================================================================================================
+
+NPM SCRIPTS:
+------------
+"dev": "vite"                          // Dev server
+"build": "vite build"                  // Production build → dist/
+"preview": "vite preview"              // Preview build locally
+"deploy": "npm run build && gh-pages -d dist"  // Deploy to GitHub Pages
+
+GIT REPOSITORY:
+---------------
+- Platform: GitHub
+- Owner: 95987-AP
+- Repo: AlpiSketch---Portfolio
+- Branch: main
+- Pages: Deployed z gh-pages branch (automatycznie przez gh-pages package)
+
+BUILD OUTPUT:
+-------------
+- Dist folder: dist/
+- Assets: dist/assets/
+- Main JS: dist/assets/index-[hash].js
+- Logo SVG: dist/assets/Logo-[hash].svg
+
+========================================================================================================
+🔧 KLUCZOWE DEPENDENCIES
+========================================================================================================
+
+"framer-motion": "^12.23.25"    // Animacje, parallax, gestures
+"lucide-react": "^0.556.0"      // Ikony (ArrowDownRight, ChevronLeft, etc.)
+"react": "^19.2.1"              // Core
+"react-dom": "^19.2.1"          // DOM rendering
+"gh-pages": "^6.3.0"            // Deployment
+
+========================================================================================================
+📝 TYPY I INTERFEJSY
+========================================================================================================
+
+interface Project {
+  id: string;              // np. "p1", "p2"
+  number: string;          // np. "01", "02"
+  title: string;           // Nazwa projektu
+  category: string;        // Kategoria
+  description: string;     // Długi opis
+  imageUrl: string;        // Main image (fallback/thumbnail)
+  year: string;            // "2024"
+  tags: string[];          // Tagi
+  slides?: string[];       // Opcjonalnie: slideshow
+  logoGrid?: string[];     // Opcjonalnie: grid logo
+  posterGrid?: string[];   // Opcjonalnie: grid posterów
+}
+
+========================================================================================================
+🎯 UX PATTERNS & BEST PRACTICES
+========================================================================================================
+
+1. Jeden aktywny projekt: Accordion zamyka poprzedni przy otwieraniu nowego
+2. Click propagation: e.stopPropagation() w modalach i slideshow
+3. Accessibility: aria-label na buttonach nawigacji
+4. Loading: Lazy loading images przez browser (native)
+5. Mobile-first: Responsive design od mobile w górę
+6. Performance: will-change-transform dla animowanych elementów
+7. SEO: Semantic HTML, proper heading hierarchy
+
+========================================================================================================
+🔄 TYPOWE ZADANIA MODYFIKACYJNE
+========================================================================================================
+
+DODANIE NOWEGO PROJEKTU:
+------------------------
+1. Dodaj folder z obrazami do public/
+2. Edytuj constants.ts → dodaj nowy obiekt do PROJECTS[]
+3. Aktualizuj numery "number" i "id" dla istniejących
+4. Wybierz tryb: slides, logoGrid, lub posterGrid
+5. Deploy: npm run deploy
+
+ZMIANA KOLEJNOŚCI PROJEKTÓW:
+-----------------------------
+- Edytuj array w constants.ts
+- Zmień "number" property dla zachowania kolejności wizualnej
+
+DODANIE NOWEJ SEKCJI:
+---------------------
+- Dodaj link w Navigation.tsx → menuItems
+- Dodaj section w App.tsx z odpowiednim id
+- Smooth scroll automatyczny
+
+ZMIANA KOLORÓW:
+---------------
+- Tailwind classes w komponentach
+- Główne kolory: stone-*, #EBEAE5, #E5E4DE
+- Zachowaj spójność z theme
+
+========================================================================================================
+⚠️ ZNANE QUIRKI
+========================================================================================================
+
+1. Nazwa pliku: /AlpineXEsportIdentity/Vicotry.jpg ma typo (Victory)
+2. Unused component: GlassCard.tsx nie jest używany obecnie
+3. Placeholder links: Social media i case study buttons mają href="#"
+4. Index.css warning: Vite pokazuje warning o nieistniejącym /index.css (ignorowane)
+
+========================================================================================================
+💡 KONTEKST UŻYTKOWY DLA AGENTA
+========================================================================================================
+
+CO AGENT AI POWINIEN WIEDZIEĆ:
+-------------------------------
+- Strona jest MINIMALISTYCZNA - każda zmiana powinna zachować clean aesthetic
+- TYPOGRAFIA jest kluczowa - mix bold/mono/serif ma znaczenie semantyczne
+- ANIMACJE są płynne i subtle, nie aggressive
+- OBRAZY są centralne - wysokiej jakości visuals to priorytet
+- AKORDEON może mieć tylko jeden otwarty projekt na raz (UX decision)
+- MODALS dla full-size view są kluczowe dla prezentacji pracy
+- Strona jest FULLY RESPONSIVE - mobile ma równie dobre doświadczenie co desktop
+- GITHUB PAGES deployment jest zautomatyzowany przez npm run deploy
+
+PRZY MODYFIKACJACH AGENT POWINIEN:
+-----------------------------------
+- Zachować istniejące pattern'y animacji
+- Używać tego samego easing curve: [0.16, 1, 0.3, 1]
+- Maintainować color palette (stone-*)
+- Przestrzegać responsive breakpoints (md:, lg:)
+- Dodawać aria-labels dla accessibility
+- Testować na różnych rozmiarach ekranu
+- Commitować z descriptive messages
+- Buildować i deployować po zmianach
+
+========================================================================================================
+
+To jest pełny kontekst strony portfolio AlpiSketch - minimalistycznego, high-end portfolio 
+designerskiego z focus na typografię, motion design i architektoniczne layouty.
+
+========================================================================================================
